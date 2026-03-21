@@ -1,26 +1,13 @@
 import * as fs from "fs/promises";
-// import * as http from "http";
+import { URL } from "url";
+import * as http from "http";
 
-// const PORT = 8080;
-//
-// const server = http.createServer(async (req, res) => {
-//
-//   const pathName = req.url;
-//
-//   if (pathName === "/") {
-//     res.writeHead(200, { "Content-Type": "text/html" });
-//     res.end("<h1>Welcome</h1>");
-//   } else {
-//     res.writeHead(404, { "Content-Type": "text/html" });
-//     res.end("<h1>404 - Not Found</h1>");
-//   }
-// });
-//
-// server.listen(PORT, () => {
-//   console.log(`Server is running on the http://localhost:${PORT}`);
-// });
+const PORT = 8080;
 
-const run = async () => {
+const server = http.createServer(async (req, res) => {
+  const myUrl = new URL(req.url,`http://${req.headers.host}`);
+  const pathName = myUrl.pathname;
+
   const users = await fs.readFile("./users.json", "utf8");
   const parsedUsers = JSON.parse(users);
   parsedUsers.forEach(user => {
@@ -32,10 +19,31 @@ const run = async () => {
     name: "Lola",
     role: "user",
   }
-  parsedUsers.push(user);
 
-  await fs.writeFile("./users.json", JSON.stringify(parsedUsers, null, 2));
-  console.log("User added!");
-}
+  if (pathName === "/") {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end("<h1>Welcome</h1>");
+  }
+  else if (pathName === "/add-user") {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    parsedUsers.push(user);
+    await fs.writeFile("./users.json", JSON.stringify(parsedUsers, null, 2));
+    res.end("<h1>User added!</h1>");
+  }
+  else if (pathName === "/delete-user") {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    const id = myUrl.searchParams.get("id");
+    const filteredUsers = parsedUsers.filter(user => user.id !== Number(id));
+    await fs.writeFile("./users.json", JSON.stringify(filteredUsers, null, 2));
+    res.end("<h1>User removed!</h1>");
+  }
+  else {
+    res.writeHead(404, { "Content-Type": "text/html" });
+    res.end("<h1>404 - Not Found</h1>");
+  }
+});
 
-run();
+server.listen(PORT, () => {
+  console.log(`Server is running on the http://localhost:${PORT}`);
+});
+
