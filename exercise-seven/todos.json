@@ -1,0 +1,12 @@
+[
+  {
+    "todoId": "1",
+    "todoName": "Node.js project",
+    "description": "Node.js AI agent for learning German language"
+  },
+  {
+    "todoId": "2",
+    "todoName": "React project",
+    "description": "Static website for a restaurant"
+  }
+]
