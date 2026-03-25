@@ -1,0 +1,20 @@
+{
+  "name": "exercise-six",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "slugify": "^1.6.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
