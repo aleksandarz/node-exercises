@@ -1,0 +1,6 @@
+[
+  { "id": 1, "name": "Pasta", "cuisine": "Italian", "time": 20 },
+  { "id": 2, "name": "Burger", "cuisine": "American", "time": 15 },
+  { "id": 3, "name": "Sushi", "cuisine": "Japanese", "time": 40 },
+  { "id": 4, "name": "Pizza", "cuisine": "Italian", "time": 25 }
+]
